@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Administration</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap');
+
+:root{
+    --paper:#f7f6f2;
+    --white:#ffffff;
+    --ink:#252525;
+    --muted:#77746d;
+    --line:#dedcd5;
+    --soft:#efeee9;
+    --dark:#292a27;
+    --green:#557363;
+    --red:#9a5b52;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"DM Sans", sans-serif;
+    min-height:100vh;
+}
+
+/* ---------------- HEADER ---------------- */
+
+.topbar{
+    height:72px;
+    background:var(--white);
+    border-bottom:1px solid var(--line);
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 38px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.brand-mark{
+    width:30px;
+    height:30px;
+    border:1px solid var(--dark);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:13px;
+    font-weight:600;
+}
+
+.brand-name{
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:.2px;
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.admin-label{
+    font-size:13px;
+    color:var(--muted);
+}
+
+.logout{
+    border:0;
+    background:none;
+    color:var(--ink);
+    font-family:inherit;
+    font-size:13px;
+    cursor:pointer;
+    padding:5px 0;
+    border-bottom:1px solid transparent;
+}
+
+.logout:hover{
+    border-bottom-color:var(--ink);
+}
+
+/* ---------------- PAGE ---------------- */
+
+.page{
+    max-width:1500px;
+    margin:auto;
+    padding:38px;
+}
+
+.page-heading{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+
+    margin-bottom:32px;
+}
+
+.heading-left h1{
+    font-family:"Playfair Display", serif;
+    font-size:38px;
+    font-weight:500;
+    letter-spacing:-.8px;
+}
+
+.heading-left p{
+    margin-top:8px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.date{
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* ---------------- SUMMARY ---------------- */
+
+.summary{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-bottom:38px;
+}
+
+.summary-item{
+    min-height:120px;
+    padding:20px 24px;
+
+    border-right:1px solid var(--line);
+}
+
+.summary-item:first-child{
+    padding-left:0;
+}
+
+.summary-item:last-child{
+    border-right:0;
+}
+
+.summary-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.1px;
+    color:var(--muted);
+}
+
+.summary-value{
+    margin-top:14px;
+    font-size:30px;
+    font-weight:500;
+    letter-spacing:-1px;
+}
+
+.summary-note{
+    margin-top:5px;
+    font-size:12px;
+    color:var(--muted);
+}
+
+/* ---------------- MAIN GRID ---------------- */
+
+.content{
+    display:grid;
+    grid-template-columns:420px 1fr;
+    gap:42px;
+}
+
+/* ---------------- CANDIDATES ---------------- */
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:15px;
+}
+
+.section-title h2{
+    font-size:15px;
+    font-weight:600;
+}
+
+.count{
+    font-size:12px;
+    color:var(--muted);
+}
+
+.search{
+    width:100%;
+    height:42px;
+
+    background:transparent;
+    border:1px solid var(--line);
+
+    padding:0 13px;
+
+    font-family:inherit;
+    font-size:13px;
+
+    outline:none;
+    margin-bottom:14px;
+}
+
+.search:focus{
+    border-color:#aaa79e;
+}
+
+.user-list{
+    border-top:1px solid var(--line);
+}
+
+.user{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    padding:17px 10px;
+
+    border-bottom:1px solid var(--line);
+
+    cursor:pointer;
+    transition:background .15s ease;
+}
+
+.user:hover{
+    background:#efeee9;
+}
+
+.avatar{
+    width:42px;
+    height:42px;
+
+    background:#dedbd2;
+    color:#46443e;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:14px;
+    font-weight:600;
+    overflow:hidden;
+}
+
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.user-info{
+    min-width:0;
+    flex:1;
+}
+
+.user-name{
+    font-size:14px;
+    font-weight:600;
+}
+
+.user-email{
+    color:var(--muted);
+    font-size:12px;
+
+    margin-top:4px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.user-tests{
+    text-align:right;
+}
+
+.user-tests strong{
+    display:block;
+    font-size:15px;
+    font-weight:500;
+}
+
+.user-tests span{
+    font-size:10px;
+    color:var(--muted);
+}
+
+/* ---------------- OVERVIEW ---------------- */
+
+.overview{
+    min-width:0;
+}
+
+.overview-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding-bottom:15px;
+    border-bottom:1px solid var(--line);
+
+    margin-bottom:20px;
+}
+
+.overview-head h2{
+    font-size:15px;
+    font-weight:600;
+}
+
+.view-label{
+    font-size:12px;
+    color:var(--muted);
+}
+
+/* ---------------- EMPTY DETAIL AREA ---------------- */
+
+.detail{
+    background:var(--white);
+    border:1px solid var(--line);
+
+    min-height:390px;
+
+    padding:32px;
+}
+
+.detail-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+
+    padding-bottom:25px;
+    border-bottom:1px solid var(--line);
+}
+
+.detail-person{
+    display:flex;
+    gap:17px;
+    align-items:center;
+}
+
+.detail-avatar{
+    width:58px;
+    height:58px;
+
+    background:var(--soft);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:18px;
+    font-weight:600;
+    overflow:hidden;
+}
+
+.detail-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.detail-name{
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+}
+
+.detail-email{
+    margin-top:5px;
+    font-size:12px;
+    color:var(--muted);
+}
+
+.status{
+    font-size:11px;
+    padding:6px 10px;
+    border:1px solid var(--line);
+    color:var(--green);
+}
+
+/* ---------------- DETAIL STATS ---------------- */
+
+.detail-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    margin-top:25px;
+    border-bottom:1px solid var(--line);
+}
+
+.detail-stat{
+    padding:0 20px 24px 0;
+    border-right:1px solid var(--line);
+    margin-right:20px;
+}
+
+.detail-stat:last-child{
+    border:0;
+    margin:0;
+}
+
+.detail-stat-label{
+    color:var(--muted);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+}
+
+.detail-stat-value{
+    font-size:25px;
+    margin-top:10px;
+}
+
+/* ---------------- ACTIVITY ---------------- */
+
+.activity{
+    margin-top:25px;
+}
+
+.activity-title{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+    color:var(--muted);
+    margin-bottom:12px;
+}
+
+.activity-row{
+    display:flex;
+    justify-content:space-between;
+
+    padding:10px 0;
+
+    border-bottom:1px solid #eceae5;
+
+    font-size:12px;
+}
+
+.activity-row span:last-child{
+    color:var(--muted);
+}
+
+/* ---------------- OVERALL METRICS ---------------- */
+
+.overview-metrics{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:16px;
+}
+
+.metric-box{
+    background:white;
+    border:1px solid var(--line);
+    min-height:185px;
+    padding:24px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    transition:.18s ease;
+}
+
+.metric-box:hover{
+    border-color:#b9b6ad;
+}
+
+.metric-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.metric-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--muted);
+}
+
+.metric-symbol{
+    width:34px;
+    height:34px;
+
+    border:1px solid var(--line);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:15px;
+}
+
+.metric-number{
+    font-size:34px;
+    font-weight:500;
+    letter-spacing:-1.5px;
+}
+
+.metric-subtitle{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:5px;
+}
+
+/* ---------------- ALERT PICTOGRAPH ---------------- */
+
+.alert-box{
+    position:relative;
+}
+
+.alert-circle-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    margin-top:5px;
+}
+
+.alert-circle{
+    position:relative;
+
+    width:112px;
+    height:112px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.alert-circle::before{
+    content:"";
+
+    position:absolute;
+
+    width:86px;
+    height:86px;
+
+    border-radius:50%;
+
+    background:white;
+}
+
+.alert-circle:hover{
+    transform:scale(1.04);
+
+    box-shadow:
+        0 8px 22px rgba(0,0,0,.10);
+}
+
+.alert-circle-content{
+    position:relative;
+    z-index:2;
+
+    text-align:center;
+}
+
+.alert-number{
+    font-size:28px;
+    font-weight:500;
+    line-height:1;
+}
+
+.alert-label{
+    margin-top:5px;
+
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+
+    color:var(--muted);
+}
+
+
+/* ---------------- ALERT HOVER ---------------- */
+
+.alert-hover{
+    position:absolute;
+
+    top:45px;
+    left:125px;
+
+    width:270px;
+
+    background:white;
+
+    border:1px solid var(--line);
+
+    padding:18px;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.12);
+
+    opacity:0;
+    visibility:hidden;
+
+    transform:translateY(8px);
+
+    transition:.2s ease;
+
+    z-index:50;
+}
+
+.alert-box:hover .alert-hover{
+    opacity:1;
+    visibility:visible;
+
+    transform:translateY(0);
+}
+
+.alert-hover-title{
+    font-size:13px;
+    font-weight:600;
+
+    margin-bottom:4px;
+}
+
+.alert-hover-subtitle{
+    font-size:11px;
+    color:var(--muted);
+
+    margin-bottom:12px;
+}
+
+.alert-person{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:9px 0;
+
+    border-top:1px solid #eceae5;
+
+    font-size:11px;
+}
+
+.alert-person-name{
+    max-width:165px;
+
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.alert-person-score{
+    color:#985e55;
+    font-weight:600;
+}
+
+.alert-empty{
+    font-size:11px;
+    color:var(--muted);
+
+    padding-top:5px;
+}
+
+
+/* ---------------- INTEGRITY METER ---------------- */
+
+.integrity-meter{
+    width:100%;
+    height:5px;
+    background:#e8e6df;
+    margin-top:18px;
+    overflow:hidden;
+}
+
+.integrity-fill{
+    height:100%;
+    background:var(--green);
+}
+
+
+/* ---------------- RISK DISTRIBUTION ---------------- */
+
+.risk-bars{
+    margin-top:20px;
+}
+
+.risk-line{
+    display:grid;
+    grid-template-columns:55px 1fr 42px;
+    align-items:center;
+    gap:9px;
+
+    margin-bottom:9px;
+
+    font-size:11px;
+}
+
+.risk-name{
+    color:var(--muted);
+}
+
+.risk-track{
+    height:5px;
+    background:#e8e6df;
+}
+
+.risk-fill{
+    height:100%;
+}
+
+.risk-low{
+    background:#66806f;
+}
+
+.risk-medium{
+    background:#9a8560;
+}
+
+.risk-high{
+    background:#985e55;
+}
+
+.risk-percent{
+    text-align:right;
+    color:var(--muted);
+}
+
+
+/* ---------------- SUPPORTING METRICS ---------------- */
+
+.supporting-metrics{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    margin-top:16px;
+
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+
+    background:white;
+}
+
+.supporting-item{
+    padding:20px;
+
+    border-right:1px solid var(--line);
+}
+
+.supporting-item:last-child{
+    border-right:0;
+}
+
+.supporting-label{
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.9px;
+    color:var(--muted);
+}
+
+.supporting-value{
+    font-size:22px;
+    margin-top:9px;
+    font-weight:500;
+}
+
+
+/* ---------------- CANDIDATE VIEW ---------------- */
+
+.candidate-view{
+    display:none;
+}
+
+.candidate-view.active{
+    display:block;
+}
+
+.overall-view.hidden{
+    display:none;
+}
+
+
+/* ---------------- CANDIDATE DETAIL HEADER ---------------- */
+
+.candidate-detail-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding-bottom:22px;
+    border-bottom:1px solid var(--line);
+}
+
+.candidate-detail-person{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.candidate-detail-avatar{
+    width:58px;
+    height:58px;
+
+    background:var(--soft);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:17px;
+    font-weight:600;
+    overflow:hidden;
+}
+
+.candidate-detail-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.candidate-detail-name{
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+}
+
+.candidate-detail-email{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:5px;
+}
+
+.back-label{
+    border:0;
+    background:none;
+
+    font-family:inherit;
+    font-size:12px;
+
+    color:var(--muted);
+
+    cursor:pointer;
+}
+
+.back-label:hover{
+    color:var(--ink);
+}
+
+
+/* ---------------- CANDIDATE STATS ---------------- */
+
+.candidate-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+
+    margin-top:25px;
+
+    border-bottom:1px solid var(--line);
+}
+
+.candidate-stat{
+    padding:0 20px 24px 0;
+
+    margin-right:20px;
+
+    border-right:1px solid var(--line);
+}
+
+.candidate-stat:last-child{
+    border-right:0;
+    margin-right:0;
+}
+
+.candidate-stat-label{
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.9px;
+    color:var(--muted);
+}
+
+.candidate-stat-value{
+    font-size:28px;
+    margin-top:10px;
+}
+
+
+/* ---------------- CANDIDATE ACTIVITY ---------------- */
+
+.candidate-activity{
+    margin-top:25px;
+}
+
+.candidate-activity-title{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--muted);
+    margin-bottom:13px;
+}
+
+.activity-placeholder{
+    padding:16px 0;
+    border-bottom:1px solid #eceae5;
+
+    display:flex;
+    justify-content:space-between;
+
+    font-size:12px;
+}
+
+.activity-placeholder span:last-child{
+    color:var(--muted);
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media(max-width:1000px){
+
+    .content{
+        grid-template-columns:1fr;
+    }
+
+    .summary{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .summary-item:nth-child(2){
+        border-right:0;
+    }
+
+    .summary-item:nth-child(3),
+    .summary-item:nth-child(4){
+        border-top:1px solid var(--line);
+    }
+
+}
+
+@media(max-width:650px){
+
+    .topbar{
+        padding:0 18px;
+    }
+
+    .page{
+        padding:25px 18px;
+    }
+
+    .page-heading{
+        display:block;
+    }
+
+    .date{
+        margin-top:12px;
+    }
+
+    .summary{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .summary-item{
+        padding:18px 12px;
+    }
+
+    .summary-item:first-child{
+        padding-left:12px;
+    }
+
+    .detail{
+        padding:20px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="brand-mark">
+            EM
+        </div>
+
+        <div class="brand-name">
+            Exam Monitoring
+        </div>
+
+    </div>
+
+    <div class="top-right">
+
+        <span class="admin-label">
+            Administration
+        </span>
+
+        <button class="logout" onclick="window.location.href='/logout'">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="page">
+
+
+    <div class="page-heading">
+
+        <div class="heading-left">
+
+            <h1>Overview</h1>
+
+            <p>
+                Candidate activity and examination records
+            </p>
+
+        </div>
+
+        <div class="date">
+            Administration Panel
+        </div>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <section class="summary">
+
+        <div class="summary-item">
+
+            <div class="summary-label">
+                Candidates
+            </div>
+
+            <div class="summary-value">
+                {{ users|length }}
+            </div>
+
+            <div class="summary-note">
+                Registered candidates
+            </div>
+
+        </div>
+
+
+        <div class="summary-item">
+
+            <div class="summary-label">
+                Tests
+            </div>
+
+            <div class="summary-value">
+                {{ users|sum(attribute='total_tests') }}
+            </div>
+
+            <div class="summary-note">
+                Examination sessions
+            </div>
+
+        </div>
+
+
+        <div class="summary-item">
+
+            <div class="summary-label">
+                Active
+            </div>
+
+            <div class="summary-value">
+                —
+            </div>
+
+            <div class="summary-note">
+                Currently attempting
+            </div>
+
+        </div>
+
+
+        <div class="summary-item">
+
+            <div class="summary-label">
+                Last Login
+            </div>
+
+            <div class="summary-value">
+                {% if admin_last_login %}
+                    {{ admin_last_login.strftime('%d %b %Y') }}
+                {% else %}
+                    —
+                {% endif %}
+            </div>
+
+            <div class="summary-note">
+                {% if admin_last_login %}
+                    {{ admin_last_login.strftime('%I:%M %p') }}
+                {% else %}
+                    Never
+                {% endif %}
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MAIN CONTENT -->
+
+    <section class="content">
+
+
+        <!-- CANDIDATE LIST -->
+
+        <div class="candidates">
+
+            <div class="section-title">
+
+                <h2>Candidates</h2>
+
+                <span class="count">
+                    {{ users|length }} registered
+                </span>
+
+            </div>
+
+
+            <input
+                type="text"
+                id="searchUser"
+                class="search"
+                placeholder="Search by name or email..."
+            >
+
+
+            <div class="user-list" id="userList">
+
+                {% for user in users %}
+
+                <div
+                    class="user"
+                    data-candidate-id="{{ user.candidate_id }}"
+                    data-search="{{ user.first_name }} {{ user.middle_name }} {{ user.last_name }} {{ user.email }}"
+                >
+
+                    <div class="avatar">
+
+                        {% if user.photo_path %}
+                            <img src="/photos/{{ user.photo_path.split('/')[-1] }}" alt="Candidate">
+                        {% else %}
+                            {{ user.first_name[0]|upper }}{{ user.last_name[0]|upper }}
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="user-info">
+
+                        <div class="user-name">
+
+                            {{ user.first_name }}
+
+                            {% if user.middle_name %}
+                                {{ user.middle_name }}
+                            {% endif %}
+
+                            {{ user.last_name }}
+
+                        </div>
+
+                        <div class="user-email">
+                            {{ user.email }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="user-tests">
+
+                        <strong>
+                            {{ user.total_tests }}
+                        </strong>
+
+                        <span>
+                            tests
+                        </span>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- OVERVIEW -->
+
+                <div class="overview">
+
+
+        <!-- ===================================================== -->
+        <!-- OVERALL ADMIN OVERVIEW -->
+        <!-- ===================================================== -->
+
+        <div id="overallView" class="overall-view">
+
+            <div class="overview-head">
+
+                <h2>Overall Overview</h2>
+
+                <span class="view-label">
+                    All examination activity
+                </span>
+
+            </div>
+
+
+            <!-- FOUR MAIN METRICS -->
+
+            <div class="overview-metrics">
+
+
+                <!-- AVERAGE INTEGRITY -->
+
+                <div class="metric-box">
+
+                    <div class="metric-top">
+
+                        <div class="metric-label">
+                            Average Integrity
+                        </div>
+
+                        <div class="metric-symbol">
+                            ◯
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="metric-number">
+                            {{ average_integrity }}
+                        </div>
+
+                        <div class="metric-subtitle">
+                            Across all examination sessions
+                        </div>
+
+
+                        <div class="integrity-meter">
+
+                            <div
+                                class="integrity-fill"
+                                style="width: {{ average_integrity }}%;"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RISK DISTRIBUTION -->
+
+                <div class="metric-box">
+
+                    <div class="metric-top">
+
+                        <div class="metric-label">
+                            Risk Distribution
+                        </div>
+
+                        <div class="metric-symbol">
+                            ◉
+                        </div>
+
+                    </div>
+
+
+                    <div class="risk-bars">
+
+
+                        <div class="risk-line">
+
+                            <span class="risk-name">
+                                Low
+                            </span>
+
+                            <div class="risk-track">
+
+                                <div
+                                    class="risk-fill risk-low"
+                                    style="width:{{ low_risk_percentage }}%;"
+                                ></div>
+
+                            </div>
+
+                            <span class="risk-percent">
+                                {{ low_risk_percentage }}%
+                            </span>
+
+                        </div>
+
+
+                        <div class="risk-line">
+
+                            <span class="risk-name">
+                                Medium
+                            </span>
+
+                            <div class="risk-track">
+
+                                <div
+                                    class="risk-fill risk-medium"
+                                    style="width:{{ medium_risk_percentage }}%;"
+                                ></div>
+
+                            </div>
+
+                            <span class="risk-percent">
+                                {{ medium_risk_percentage }}%
+                            </span>
+
+                        </div>
+
+
+                        <div class="risk-line">
+
+                            <span class="risk-name">
+                                High
+                            </span>
+
+                            <div class="risk-track">
+
+                                <div
+                                    class="risk-fill risk-high"
+                                    style="width:{{ high_risk_percentage }}%;"
+                                ></div>
+
+                            </div>
+
+                            <span class="risk-percent">
+                                {{ high_risk_percentage }}%
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- ALERTS -->
+
+                <div class="metric-box alert-box">
+
+                    <div class="metric-top">
+
+                        <div class="metric-label">
+                            Alerts
+                        </div>
+
+                        <div class="metric-symbol">
+                            !
+                        </div>
+
+                    </div>
+
+
+                    <div class="alert-circle-wrapper">
+
+                        <div
+                            class="alert-circle"
+                            style="background: conic-gradient(#985e55 {{ alert_percentage }}%, #e8e6df 0);"
+                        >
+
+                            <div class="alert-circle-content">
+
+                                <div class="alert-number">
+                                    {{ alert_count }}
+                                </div>
+
+                                <div class="alert-label">
+                                    Tests
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- HOVER DETAILS -->
+
+                        <div class="alert-hover">
+
+                            <div class="alert-hover-title">
+                                Integrity Alerts
+                            </div>
+
+                            <div class="alert-hover-subtitle">
+                                Tests with integrity below 45
+                            </div>
+
+
+                            {% if alert_rows %}
+
+                                {% for alert in alert_rows %}
+
+                                <div class="alert-person">
+
+                                    <span class="alert-person-name">
+
+                                        {{ alert.first_name }}
+
+                                        {% if alert.middle_name %}
+                                            {{ alert.middle_name }}
+                                        {% endif %}
+
+                                        {{ alert.last_name }}
+
+                                    </span>
+
+                                    <span class="alert-person-score">
+
+                                        {{ "%.1f"|format(alert.current_integrity) }}
+
+                                    </span>
+
+                                </div>
+
+                                <div class="alert-person" style="border-top: 1px solid #eceae5; margin-top: 4px; padding-top: 8px; font-size: 10px; color: var(--muted);">
+                                    <div>Email: {{ alert.email }}</div>
+                                    <div>Session ID: {{ alert.session_id }}</div>
+                                    <div>Status: {{ alert.status }}</div>
+                                    <div>Start: {{ alert.start_time.strftime('%Y-%m-%d %H:%M:%S') if alert.start_time else '—' }}</div>
+                                    <div>End: {{ alert.end_time.strftime('%Y-%m-%d %H:%M:%S') if alert.end_time else '—' }}</div>
+                                </div>
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                <div class="alert-empty">
+                                    No tests currently below the alert threshold.
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="metric-subtitle">
+                        {{ alert_percentage }}% of tests below 45
+                    </div>
+
+                </div>
+
+
+                <!-- AVERAGE DURATION -->
+
+                <div class="metric-box">
+
+                    <div class="metric-top">
+
+                        <div class="metric-label">
+                            Average Duration
+                        </div>
+
+                        <div class="metric-symbol">
+                            ◷
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="metric-number">
+                            {{ average_duration }}
+                        </div>
+
+                        <div class="metric-subtitle">
+                            Average completed session
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- THREE SUPPORTING METRICS -->
+
+            <div class="supporting-metrics">
+
+
+                <div class="supporting-item">
+
+                    <div class="supporting-label">
+                        Completed Tests
+                    </div>
+
+                    <div class="supporting-value">
+                        {{ completed_tests }}
+                    </div>
+
+                </div>
+
+
+                <div class="supporting-item">
+
+                    <div class="supporting-label">
+                        Active Tests
+                    </div>
+
+                    <div class="supporting-value">
+                        {{ active_tests }}
+                    </div>
+
+                </div>
+
+
+                <div class="supporting-item">
+
+                    <div class="supporting-label">
+                        Evidence Captured
+                    </div>
+
+                    <div class="supporting-value">
+                        {{ evidence_captured }}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- SELECTED CANDIDATE VIEW -->
+        <!-- ===================================================== -->
+
+        <div id="candidateView" class="candidate-view">
+
+            <div class="overview-head">
+
+                <h2>Candidate Overview</h2>
+
+                <button
+                    class="back-label"
+                    id="backToOverview"
+                    type="button"
+                >
+                    ← All candidates
+                </button>
+
+            </div>
+
+
+            <div class="detail">
+
+
+                <!-- CANDIDATE HEADER -->
+
+                <div class="candidate-detail-header">
+
+
+                    <div class="candidate-detail-person">
+
+                        <div
+                            class="candidate-detail-avatar"
+                            id="detailAvatar"
+                        >
+                            —
+                        </div>
+
+
+                        <div>
+
+                            <div
+                                class="candidate-detail-name"
+                                id="detailName"
+                            >
+                                Candidate
+                            </div>
+
+                            <div
+                                class="candidate-detail-email"
+                                id="detailEmail"
+                            >
+                                —
+                            </div>
+
+                            <div class="candidate-detail-id" id="detailCandidateId" style="font-size: 11px; color: var(--muted); margin-top: 3px;">
+                                —
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+                        <div class="status" id="detailStatus">
+                            Registered
+                        </div>
+                        <button
+                            class="back-label"
+                            id="fullAnalysisBtn"
+                            type="button"
+                            style="font-size: 11px; padding: 6px 12px; border: 1px solid var(--line); background: var(--white); color: var(--ink); cursor: pointer; display: none;"
+                        >
+                            Full Analysis
+                        </button>
+                    </div>
+
+
+                </div>
+
+
+                <!-- CANDIDATE STATS -->
+
+                <div class="candidate-stats">
+
+
+                    <div class="candidate-stat">
+
+                        <div class="candidate-stat-label">
+                            Tests
+                        </div>
+
+                        <div
+                            class="candidate-stat-value"
+                            id="detailTests"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                    <div class="candidate-stat">
+
+                        <div class="candidate-stat-label">
+                            Integrity
+                        </div>
+
+                        <div
+                            class="candidate-stat-value"
+                            id="detailIntegrity"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                    <div class="candidate-stat">
+
+                        <div class="candidate-stat-label">
+                            Violations
+                        </div>
+
+                        <div
+                            class="candidate-stat-value"
+                            id="detailViolations"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- ACTIVITY -->
+
+                <div class="candidate-activity">
+
+                    <div class="candidate-activity-title">
+                        Latest Examination
+                    </div>
+
+
+                    <div class="activity-placeholder">
+
+                        <span>
+                            Examination
+                        </span>
+
+                        <span id="activityExamName">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="activity-placeholder">
+
+                        <span>
+                            Session ID
+                        </span>
+
+                        <span id="activitySessionId">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="activity-placeholder">
+
+                        <span>
+                            Start Time
+                        </span>
+
+                        <span id="activityStartTime">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="activity-placeholder">
+
+                        <span>
+                            Integrity
+                        </span>
+
+                        <span id="activityIntegrity">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="activity-placeholder">
+
+                        <span>
+                            Status
+                        </span>
+
+                        <span id="activityStatus">
+                            —
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    </section>
+
+</main>
+
+
+<!-- CANDIDATE STATS DATA (passed from backend) -->
+
+<script>
+    window.candidateStats = {{ candidate_stats | tojson }};
+</script>
+
+
+<script>
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+const searchInput = document.getElementById("searchUser");
+const users = document.querySelectorAll(".user");
+
+searchInput.addEventListener("input", function(){
+
+    const query = this.value.toLowerCase().trim();
+
+    users.forEach(function(user){
+
+        const text = user.dataset.search.toLowerCase();
+
+        if(text.includes(query)){
+            user.style.display = "flex";
+        }
+        else{
+            user.style.display = "none";
+        }
+
+    });
+
+});
+
+
+/* =========================================================
+   VIEWS
+   ========================================================= */
+
+const overallView = document.getElementById("overallView");
+const candidateView = document.getElementById("candidateView");
+const backToOverview = document.getElementById("backToOverview");
+
+
+/* =========================================================
+   CANDIDATE DETAILS
+   ========================================================= */
+
+const detailAvatar = document.getElementById("detailAvatar");
+const detailName = document.getElementById("detailName");
+const detailEmail = document.getElementById("detailEmail");
+
+const detailTests = document.getElementById("detailTests");
+const detailIntegrity = document.getElementById("detailIntegrity");
+const detailViolations = document.getElementById("detailViolations");
+
+const activityTests = document.getElementById("activityTests");
+const activityIntegrity = document.getElementById("activityIntegrity");
+
+
+/* =========================================================
+   CURRENT SELECTED CANDIDATE
+   ========================================================= */
+
+let selectedCandidate = null;
+
+
+/* =========================================================
+   CANDIDATE DETAIL ELEMENTS (content)
+   ========================================================= */
+
+const detailCandidateId = document.getElementById("detailCandidateId");
+const detailStatus = document.getElementById("detailStatus");
+const fullAnalysisBtn = document.getElementById("fullAnalysisBtn");
+
+const activityExamName = document.getElementById("activityExamName");
+const activitySessionId = document.getElementById("activitySessionId");
+const activityStartTime = document.getElementById("activityStartTime");
+const activityStatus = document.getElementById("activityStatus");
+
+
+/* =========================================================
+   OPEN CANDIDATE
+   ========================================================= */
+
+users.forEach(function(user){
+
+    user.addEventListener("click", function(){
+
+        /*
+         * If the same candidate is clicked again,
+         * return to the overall overview.
+         */
+
+        if(selectedCandidate === user){
+
+            showOverallOverview();
+
+            return;
+
+        }
+
+
+        selectedCandidate = user;
+
+
+        const searchData = user.dataset.search.trim();
+
+        const parts = searchData.split(/\s+/);
+
+        const firstName = parts[0] || "";
+        const lastName = parts.length > 1
+            ? parts[parts.length - 2]
+            : "";
+
+
+        const fullName = user.querySelector(".user-name").textContent.trim();
+
+        const email = user.querySelector(".user-email").textContent.trim();
+
+        const tests = user.querySelector(".user-tests strong").textContent.trim();
+
+        const candidateId = user.dataset.candidateId;
+
+
+        /*
+         * Populate real data from candidate_stats.
+         */
+
+        const stats = candidateId
+            ? (window.candidateStats && window.candidateStats[candidateId])
+            : null;
+
+
+        /* Avatar */
+
+        let initials = "";
+
+        if(firstName){
+            initials += firstName.charAt(0).toUpperCase();
+        }
+
+        if(lastName){
+            initials += lastName.charAt(0).toUpperCase();
+        }
+
+
+        const photoPath = stats ? stats.photo_path : null;
+
+        if(photoPath){
+            detailAvatar.innerHTML =
+                '<img src="/photos/' + photoPath.split('/').pop() + '" alt="Candidate">';
+        }
+        else{
+            detailAvatar.textContent = initials || "—";
+        }
+
+        detailName.textContent = fullName;
+
+        detailEmail.textContent = email;
+
+        detailCandidateId.textContent = candidateId
+            ? "ID: " + candidateId
+            : "—";
+
+        detailTests.textContent = tests;
+
+
+        if(stats){
+            /* Average integrity */
+            detailIntegrity.textContent =
+                stats.avg_integrity !== null && stats.avg_integrity !== undefined
+                    ? stats.avg_integrity + "%"
+                    : "—";
+
+            /* Violations */
+            detailViolations.textContent =
+                stats.total_violations !== undefined
+                    ? stats.total_violations
+                    : "—";
+
+            /* Latest exam */
+            const latest = stats.latest_exam;
+
+            if(latest){
+
+                activityExamName.textContent =
+                    latest.exam_name || ("Exam " + latest.exam_id);
+
+                activitySessionId.textContent =
+                    latest.session_id || "—";
+
+                activityStartTime.textContent =
+                    latest.start_time ? formatTimestamp(latest.start_time) : "—";
+
+                activityIntegrity.textContent =
+                    latest.integrity !== null && latest.integrity !== undefined
+                        ? latest.integrity + "%"
+                        : "—";
+
+                activityStatus.textContent =
+                    latest.status || "—";
+
+                detailStatus.textContent =
+                    latest.status || "Registered";
+
+            }
+            else{
+
+                activityExamName.textContent = "No exams";
+                activitySessionId.textContent = "—";
+                activityStartTime.textContent = "—";
+                activityIntegrity.textContent = "—";
+                activityStatus.textContent = "—";
+                detailStatus.textContent = "Registered";
+
+            }
+
+            /* Show Full Analysis button */
+            fullAnalysisBtn.style.display = "inline-block";
+            fullAnalysisBtn.onclick = function(){
+                window.location.href =
+                    "/admin/candidate/" + candidateId;
+            };
+
+        }
+        else{
+
+            /* No stats available (shouldn't happen but be safe) */
+            detailIntegrity.textContent = "—";
+            detailViolations.textContent = "—";
+            activityExamName.textContent = "—";
+            activitySessionId.textContent = "—";
+            activityStartTime.textContent = "—";
+            activityIntegrity.textContent = "—";
+            activityStatus.textContent = "—";
+            detailStatus.textContent = "Registered";
+            fullAnalysisBtn.style.display = "none";
+
+        }
+
+
+        /* Switch views */
+
+        overallView.classList.add("hidden");
+
+        candidateView.classList.add("active");
+
+    });
+
+});
+
+
+/* =========================================================
+   TIMESTAMP FORMATTING
+   ========================================================= */
+
+function formatTimestamp(value){
+    if(!value){
+        return "—";
+    }
+    // value is an ISO string like "2026-08-18T23:30:00+05:30"
+    // Display in IST (Asia/Kolkata) regardless of browser timezone
+    try{
+        const d = new Date(value);
+        if(isNaN(d.getTime())){
+            return value;
+        }
+        const opts = { timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit',
+                       hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+        // Use toLocaleString with IST timezone, then reformat to YYYY-MM-DD HH:MM:SS
+        const parts = d.toLocaleString('en-CA', opts).split(/[ ,/]/);
+        // en-CA gives YYYY-MM-DD, HH:MM:SS
+        if(parts.length >= 5){
+            return `${parts[0]}-${parts[1]}-${parts[2]} ${parts[3]}:${parts[4]}:${parts[5]}`;
+        }
+    }catch(e){
+        // Fallback to naive parsing if toLocaleString fails
+    }
+    // Fallback: parse ISO manually for IST
+    const m = value.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})/);
+    if(m){
+        return `${m[1]}-${m[2]}-${m[3]} ${m[4]}:${m[5]}:${m[6]}`;
+    }
+    return value;
+}
+
+
+/* =========================================================
+   RETURN TO OVERALL
+   ========================================================= */
+
+backToOverview.addEventListener("click", function(){
+
+    showOverallOverview();
+
+});
+
+
+function showOverallOverview(){
+
+    selectedCandidate = null;
+
+    candidateView.classList.remove("active");
+
+    overallView.classList.remove("hidden");
+
+}
+
+
+</script>
+
+</body>
+</html>

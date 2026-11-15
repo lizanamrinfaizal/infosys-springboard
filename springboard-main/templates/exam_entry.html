@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Take Test</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brand-mark">
+                EM
+            </div>
+
+            <div class="brand-name">
+                Exam Monitoring
+            </div>
+
+        </div>
+
+        <div class="top-right">
+
+            <span class="top-label">
+                Candidate Access
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <main class="entry-page">
+
+        <div class="entry-box">
+
+            <div class="panel-intro">
+
+                <p class="project-label">EXAM PORTAL</p>
+
+                <h1>Ready to Take Your Test?</h1>
+
+                <p>
+                    Login to continue your examination or register as a new
+                    candidate.
+                </p>
+
+            </div>
+
+            <div class="entry-actions">
+
+                <a href="{{ url_for('login_page') }}" class="btn btn-primary">
+                    Login
+                </a>
+
+                <a href="{{ url_for('register_page') }}" class="btn btn-secondary">
+                    Register
+                </a>
+
+            </div>
+
+            <div class="alert alert-info">
+
+                <div class="alert-mark">i</div>
+
+                <div>
+                    <div class="alert-title">Before you begin</div>
+
+                    <p class="alert-text">
+                        A working camera is required. Your face and browser
+                        activity are monitored throughout the examination.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="panel-foot">
+
+                <a href="{{ url_for('home') }}" class="back-link">
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
